@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+
+    <style>
+
+        body {
+            padding: 0;
+            margin: 0;
+        }
+/**     check to make sure margin is zero
+   canvas {
+            border: 1em solid gray;
+        }
+   **/
+        /**canvas {
+            display: block;
+            margin: 0 auto;
+        }
+**/
+    </style>
+
+</head>
+<body>
+
+<canvas height="900" width="900">
+</canvas>
+
+<img src="Step1Raja.jpg" alt="Cute Raja" style="display:none";/>
+
+<script>
+    window.addEventListener('load', function() {
+        var canvas = document.body.firstElementChild;
+        var context = canvas.getContext('2d');
+        var img = document.body.children[1];
+
+        console.log(canvas);
+        console.log(img);
+
+        context.drawImage(img, 0, 0, 426, 426);
+
+        canvas.addEventListener('mouseenter', function () {
+            // start listening to mouse when user is in canvas
+
+            canvas.addEventListener('mousemove', moveHandler);
+            console.log('You are in the canvas..');
+                });
+
+
+        canvas.addEventListener('mouseleave', function () {
+            // stop listening to mouse move events when user is inside the canvas
+
+            canvas.removeEventListener('mousemove', moveHandler);
+            console.log('You are out of the canvas ...');
+        });
+
+        function moveHandler(event) {
+            console.log([event.pageX, event.pageY].join(', '));
+            console.log(event);
+
+            context.clearRect(0, 0, 900, 900);
+            context.drawImage(img, 0, 0, 426, 426);
+
+            // context.arc();
+            context.strokeStyle = 'blue';
+            context.strokeRect(event.pageX - 50, event.pageY - 50, 100, 100);
+
+            context.drawImage(img,
+                    2 * (event.pageX - 50),
+                    2 * (event.pageY - 50),
+                    100,
+                    100,
+                    event.pageX - 50,
+                    event.pageY - 50,
+                    100,
+                    100
+            );
+
+            // image - multiplier = 2,
+
+            // todo: zoom a portion of the canvas itself instead of drawiung the image
+
+
+
+        }
+
+    });
+
+</script>
+
+</body>
+</html>
