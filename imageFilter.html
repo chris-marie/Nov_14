@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+
+    <style>
+        body {
+            padding: 0;
+            margin: 0;
+        }
+        .right {
+            float: right;
+            font: 2em black "Helvetica Neue";
+            display: inline-block;
+            padding: 1em;
+        }
+        #brighten:hover {
+            cursor: pointer;
+        }
+
+        #cool:hover {
+            cursor: pointer;
+        }
+
+    </style>
+
+    <script>
+        window.addEventListener('load', function() {
+
+            var img = document.body.firstElementChild;
+            console.log(img);
+            var canvas = document.getElementById("mycanvas");
+            console.log(canvas);
+            var context = canvas.getContext('2d');
+            context.drawImage(img, 0, 0);
+
+            var w = 600, h = 600;
+            var image_data = context.getImageData(0,0,w,h);
+            var pixels = image_data.data;
+            console.log(pixels.length);
+            console.log(w*h*4);
+
+            // loop over pixels and change them to grayscale
+            function brighten(pixels) {
+
+                for (var i = 0, len = pixels.length; i < len; i += 4) {
+                    pixels[i] = pixels[1] + 50;
+                    pixels[i + 1] = pixels[i + 1] + 50;
+                    pixels[i + 2] = pixels[i + 2] + 50;
+                }
+                context.putImageData(image_data, 0, 0);
+            };
+
+            //brighten(pixels);
+
+            function cool(pixels) {
+
+                for (var i = 0, len = pixels.length; i < len; i += 4) {
+                    pixels[i] = pixels[1] - 5;
+                    pixels[i + 1] = pixels[i + 1];
+                    pixels[i + 2] = pixels[i + 2] + 80;
+
+                }
+                context.putImageData(image_data, 0,0);
+            }
+
+            //cool(pixels);
+        });
+
+        function grayscale(pixels) {
+            for(var i = 0, var len = pixels.length; i < len; i +=4) {
+                var gr = 0.2126 * pixels[i] + 0.7152 * pixels[i + 1] + 0.0722 * pixels[i + 2];
+                var pixels[i] = pixels[i+1] = pixels[i+2] = gr;
+            }
+
+
+        }
+
+        function filter(pixels) {
+            var coolButton = document.getElementById("cool");
+
+        }
+
+    </script>
+
+</head>
+<body>
+
+
+<img src="Step1Raja.jpg" alt="Cute Raja" style="display:none;"/>
+<canvas id="mycanvas" height ="600" width ="600"></canvas>
+
+<div class="right" id="brighten">
+    Brighten
+</div>
+
+<div class="right" id="cool">
+    Cool
+</body>
+</html>
