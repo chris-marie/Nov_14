@@ -46,6 +46,7 @@
             edit(imgData);
             context.putImageData(imgData,0,0);
         };
+
         imageEditor.brighten = function(imgData) {
             for (var i = 0, len = imgData.length; i < len; i += 4) {
                 imgData[i] += 30;
@@ -62,6 +63,57 @@
             }
         };
 
+        window.onload = function() {
+            var canvas = document.getElementById('canvas');
+            var img = new Image()
+            var imgUrl = 'Step1Raja.jpg';
+            img.src = imgUrl;
+            var context = canvas.getContext('2d');
+            var w = canvas.width, h = canvas.height;
+            var imgData = context.getImageData(0,0,w,h);
+            context.drawImage(img,0,0,w,h);
+
+            document.getElementById('btnBrighten').onclick = function() {
+                imageEditor.edit(canvas, imageEditor.brighten);
+                document.getElementById('downloadImg').href = canvas.toDataUrl();
+            };
+
+            document.getElementId('btnDarken').onclick = function() {
+                imageEditor.edit(canvas,imageEditor.darken);
+                document.getElementById('downlowdImg').href = canvas.toDataUrl();
+            };
+
+        };
+/*
+ gllImageFilter.reset = function(canvas, imgurl){
+ var img = new Image();
+ img.src = imgurl;
+ img.onload = function(){
+ canvas.height = img.height;
+ canvas.width = img.width;
+ var ctx = canvas.getContext("2d");
+ ctx.drawImage(this, 0, 0, canvas.width, canvas.height);
+ };
+ };
+
+ window.onload = function(){
+ var canvas = document.getElementById('canvas');
+
+ gllImageFilter.reset(canvas, 'img/thailand.jpg');
+
+ document.getElementById('btn_reset').onclick = function(){
+ var canvas = document.getElementById('canvas');
+ gllImageFilter.reset(canvas, 'img/thailand.jpg');
+ document.getElementById('download_image').href = canvas.toDataURL();
+ };
+
+ document.getElementById('btn_grayscale').onclick = function(){
+ var canvas = document.getElementById('canvas');
+ gllImageFilter.applyFilter(canvas, gllImageFilter.grayscale);
+ document.getElementById('download_image').href = canvas.toDataURL();
+ };
+
+ */
 
     </script>
 
