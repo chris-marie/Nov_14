@@ -36,8 +36,34 @@
         span.button:hover {
             background-color: #83c998;
         }
-
     </style>
+    <script>
+        var imageEditor = {};
+
+        imageEditor.edit = function(canvas, edit) {
+            context = canvas.getContext('2d');
+            var imgData = context.getImageData(0,0,canvas.width, canvas.height);
+            edit(imgData);
+            context.putImageData(imgData,0,0);
+        };
+        imageEditor.brighten = function(imgData) {
+            for (var i = 0, len = imgData.length; i < len; i += 4) {
+                imgData[i] += 30;
+                imgData[i+1] += 30;
+                imgData[i+2] +=30;
+
+            }
+        };
+        imageEditor.darken = function(imgData) {
+            for(var i = 0, len = imgData.length; i < len; i += 4) {
+                imgData[i] -=15;
+                imgData[i+1] -=15;
+                imgData[i+2] -=15;
+            }
+        };
+
+
+    </script>
 
 </head>
 <body>
@@ -45,8 +71,11 @@
     <header>
         <span class="button" id="btnBrighten">Brighten</span>
         <span class="button" id="btnDarken">Darken</span>
+        <a class="button" id="downloadImg" href="" download="Step1Raja">Download</a>
     </header>
 </h2>
+
+<canvas id="canvas"></canvas>
 
 </body>
 </html>
