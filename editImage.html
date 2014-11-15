@@ -7,6 +7,8 @@
     <style>
         body {
             background-color: #c6e6cf;
+            margin: 0;
+            padding: 0;
         }
         header {
             background-color: #a5fec0;
@@ -26,16 +28,18 @@
             padding: 0.5em;
             display: block;
             border-radius: 0.7em;
+            border-color: #012f30;
         }
         #canvas {
             display: block;
             margin: 0 auto;
         }
         .button {
-            font: 500 1em 'Helvetica Neue';
+            font: 200 1em 'Helvetica Neue';
             display: inline-block;
             padding: 0 4em;
             cursor: crosshair;
+            user-select: none;
         }
         span.button:hover {
             background-color: #83c998;
@@ -51,26 +55,43 @@
         imageEditor.edit = function(canvas, filter) {
             var context = canvas.getContext('2d');
             var imgData = context.getImageData(0,0,canvas.width, canvas.height);
+            console.log(imgData);
             filter(imgData);
             context.putImageData(imgData,0,0);
         };
 
         imageEditor.brighten = function(imgData) {
-            for (var i = 0, len = imgData.length; i < len; i += 4) {
+            console.log('imgData variable = ' + imgData);
+            console.log('image length =  ' + imgData.length);
+            console.log('imgData.data.length = ' +imgData.data.length);
+            imgData = imgData.data;
+            console.log('imgData = imgData.data =   ' + imgData);
+            for (var i = 0; i < imgData.length; i += 4) {
                 imgData[i] += 30;
                 imgData[i+1] += 30;
                 imgData[i+2] +=30;
-
             }
             console.log('brighten the image');
         };
         imageEditor.darken = function(imgData) {
+            imgData = imgData.data;
+            console.log('imgData = ' + imgData + ' and its length is ' + imgData.length);
+            for(var i = 0, len = imgData.length; i < len; i += 4) {
+                imgData[i] -=15;
+                imgData[i+1] -=15;
+                imgData[i+2] -=15;
+            }
+            console.log('darken the image');
+        };
+        imageEditor.nightVision = function(imgData) {
+            imgData = imgData.data;
+            console.log('imgData = ' + imgData + ' and its length is ' + imgData.length);
             for(var i = 0, len = imgData.length; i < len; i += 4) {
                 imgData[i] -=50;
                 imgData[i+1] -=85;
                 imgData[i+2] -=15;
             }
-            console.log('darken the image');
+            console.log('see da image in NIGHTVISION');
         };
 
         window.onload = function() {
@@ -95,6 +116,12 @@
                 console.log('done darkening image');
             };
 
+            document.getElementById('btnNightVision').onclick = function() {
+                imageEditor.edit(canvas, imageEditor.nightVision);
+                document.getElmentById('downloadImg').href = canvas.toDataURL();
+                console.log('see like the RAJA at night!');
+            };
+
         };
 
     </script>
@@ -105,6 +132,7 @@
     <header>
         <span class="button" id="btnBrighten">Brighten</span>
         <span class="button" id="btnDarken">Darken</span>
+        <span class="button" id="btnNightVision">Night Vision</span>
         <a class="button" id="downloadImg" href="" download="Step1Raja.jpg">Download</a>
     </header>
 </h2>
