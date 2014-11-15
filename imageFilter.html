@@ -43,29 +43,38 @@
             console.log(pixels.length);
             console.log(w*h*4);
 
-            // CURRENTLY RUNNING: change manually filter wish to apply until buttons work
-            toIndigo(pixels)
+            // checks pixel channel to pixel channel's range
+            // returns boolean if color is in range based on the range vector that contains two color vectors
+            function redInRange(r, range) {
+                r >= range[0, 0][0] &&
+                r <= range[0, 1][1]
+            }
+            function greenInRange(g, range) {
+                g >= range[1, 0][0] &&
+                g <= range[1, 1][1]
+            }
+            function blueInRange(b, range) {
+                b >= range[2, 0][0] &&
+                b <= range[2, 1][1]
+            }
 
-            //   grayscale(pixels);
-
-            //cool(pixels);
-
-
+            // replace dark gray range with a blue
             function toIndigo(pixels) {
                 // range = 36,56,61 -1 : 13,29,32 +2
                 console.log('changed color to Indigo');
                 var range = [[13, 36], [29, 56], [32, 61]];
                 var newColor = 43 + 12 + 198;
+
                 for (var i = 0, len = pixels.length; i < len; i += 4) {
                     r = pixels[i];
                     g = pixels[i + 1];
                     b = pixels[i + 2];
-        //            if (r >= range[0, 0] && r <= range[0, 1] && g >= range[1, 0] && g <= range[1, 1] && b >= range[2, 0] && b <= range[2, 1]) {
+                    if(redInRange(r, range) && greenInRange(g, range) && blueInRange(b, range)){
                         pixels[i] = pixels[i + 1] = pixels[i + 2] = newColor;
-          //          }
-                }
+                    }
+                  }
                 context.putImageData(image_data, 0, 0);
-            };
+            }
 
             //brighten(pixels);
             function brighten(pixels) {
@@ -75,7 +84,7 @@
                     pixels[i + 2] = pixels[i + 2] + 50;
                 }
                 context.putImageData(image_data, 0, 0);
-            };
+            }
 
             // reduce red in photo
             function cool(pixels) {
@@ -85,7 +94,7 @@
                     pixels[i + 2] = pixels[i + 2] + 80
                 }
                 context.putImageData(image_data, 0,0);
-            };
+            }
 
             // loop over pixels and change them to grayscale
             function grayscale(pixels) {
@@ -94,8 +103,14 @@
                     pixels[i] = pixels[i+1] = pixels[i+2] = gr;
                 }
             }
+
+// CURRENTLY RUNNING: change manually filter wish to apply until buttons work
+            toIndigo(pixels);
         });
         // selective filter: create lens/circle that fades to gray to white outside of the circle to the corners
+
+
+
 
 // ADD FILTER FUNCTIONALITY TO BUTTONS!
 /*        brightenDoIt = document.getElementById('brighten');
