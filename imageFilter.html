@@ -14,9 +14,11 @@
             font: 2em 100 "Helvetica Neue";
             display: inline-block;
             padding: 1em;
+            background-color: lightcyan;
         }
-        #brighten:hover {
+        .right:hover {
             cursor: pointer;
+            background-color: cyan;
         }
 
         #cool:hover {
@@ -41,9 +43,32 @@
             console.log(pixels.length);
             console.log(w*h*4);
 
-            // loop over pixels and change them to grayscale
-            function brighten(pixels) {
+            // CURRENTLY RUNNING: change manually filter wish to apply until buttons work
+            toIndigo(pixels)
 
+            //   grayscale(pixels);
+
+            //cool(pixels);
+
+
+            function toIndigo(pixels) {
+                // range = 36,56,61 -1 : 13,29,32 +2
+                console.log('changed color to Indigo');
+                var range = [[13, 36], [29, 56], [32, 61]];
+                var newColor = 43 + 12 + 198;
+                for (var i = 0, len = pixels.length; i < len; i += 4) {
+                    r = pixels[i];
+                    g = pixels[i + 1];
+                    b = pixels[i + 2];
+        //            if (r >= range[0, 0] && r <= range[0, 1] && g >= range[1, 0] && g <= range[1, 1] && b >= range[2, 0] && b <= range[2, 1]) {
+                        pixels[i] = pixels[i + 1] = pixels[i + 2] = newColor;
+          //          }
+                }
+                context.putImageData(image_data, 0, 0);
+            };
+
+            //brighten(pixels);
+            function brighten(pixels) {
                 for (var i = 0, len = pixels.length; i < len; i += 4) {
                     pixels[i] = pixels[1] + 50;
                     pixels[i + 1] = pixels[i + 1] + 50;
@@ -52,36 +77,38 @@
                 context.putImageData(image_data, 0, 0);
             };
 
-            //brighten(pixels);
-
+            // reduce red in photo
             function cool(pixels) {
-
                 for (var i = 0, len = pixels.length; i < len; i += 4) {
                     pixels[i] = pixels[1] - 5;
                     pixels[i + 1] = pixels[i + 1];
-                    pixels[i + 2] = pixels[i + 2] + 80;
-
+                    pixels[i + 2] = pixels[i + 2] + 80
                 }
                 context.putImageData(image_data, 0,0);
-            }
+            };
 
-            //cool(pixels);
+            // loop over pixels and change them to grayscale
+            function grayscale(pixels) {
+                for (var i = 0, len = pixels.length; i < len; i +=4) {
+                    var gr = 0.2126 * pixels[i] + 0.7152 * pixels[i + 1] + 0.0722 * pixels[i + 2];
+                    pixels[i] = pixels[i+1] = pixels[i+2] = gr;
+                }
+            }
         });
+        // selective filter: create lens/circle that fades to gray to white outside of the circle to the corners
 
-        function grayscale(pixels) {
-            for (var i = 0, len = pixels.length; i < len; i +=4) {
-                var gr = 0.2126 * pixels[i] + 0.7152 * pixels[i + 1] + 0.0722 * pixels[i + 2];
-                pixels[i] = pixels[i+1] = pixels[i+2] = gr;
-            }
-// selective filter: create lens/circle that fades to gray to white outside of the circle to the corners
-
-        }
-
-        function filter(pixels) {
-            var coolButton = document.getElementById("cool");
-
-        }
-
+// ADD FILTER FUNCTIONALITY TO BUTTONS!
+/*        brightenDoIt = document.getElementById('brighten');
+        brightenDoIt.addEventListener('click', function() {
+            console.log('user has clicked BRIGHTEN');
+            brighten(pixels);
+        });
+        coolDoIt = document.getElementById('cool');
+        coolDoIt.addEventListener('click', function() {
+            console.log('user has clicked COOL');
+            cool(pixels);
+        });
+*/
     </script>
 
 </head>
@@ -91,11 +118,9 @@
 <img src="Step1Raja.jpg" alt="Cute Raja" style="display:none;"/>
 <canvas id="mycanvas" height ="600" width ="600"></canvas>
 
-<div class="right" id="brighten">
-    Brighten
-</div>
+<div class="right" id="brighten">Brighten</div>
 
-<div class="right" id="cool">
-    Cool
+<div class="right" id="cool"> Cool</div>
+
 </body>
 </html>
