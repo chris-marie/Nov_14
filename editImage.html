@@ -52,6 +52,7 @@
         };
 
         imageEditor.brighten = function(imgData) {
+            console.log('brighten the image');
             for (var i = 0, len = imgData.length; i < len; i += 4) {
                 imgData[i] += 30;
                 imgData[i+1] += 30;
@@ -60,9 +61,10 @@
             }
         };
         imageEditor.darken = function(imgData) {
+            console.log('darken the image');
             for(var i = 0, len = imgData.length; i < len; i += 4) {
-                imgData[i] -=15;
-                imgData[i+1] -=15;
+                imgData[i] -=50;
+                imgData[i+1] -=85;
                 imgData[i+2] -=15;
             }
         };
@@ -79,12 +81,14 @@
 
             document.getElementById('btnBrighten').onclick = function() {
                 imageEditor.edit(canvas, imageEditor.brighten);
-                document.getElementById('downloadImg').href = canvas.toDataUrl();
+                document.getElementById('downloadImg').href = canvas.toDataURL();
+                console.log('done brightening image');
             };
 
-            document.getElementId('btnDarken').onclick = function() {
-                imageEditor.edit(canvas,imageEditor.darken);
-                document.getElementById('downlowdImg').href = canvas.toDataUrl();
+            document.getElementById('btnDarken').onclick = function() {
+                imageEditor.edit(canvas, imageEditor.darken);
+                document.getElementById('downloadImg').href = canvas.toDataURL();
+                console.log('done darkening image');
             };
 
         };
@@ -97,11 +101,13 @@
     <header>
         <span class="button" id="btnBrighten">Brighten</span>
         <span class="button" id="btnDarken">Darken</span>
-        <a class="button" id="downloadImg" href="" download="Step1Raja">Download</a>
+        <a class="button" id="downloadImg" href="" download="Step1Raja.jpg">Download</a>
     </header>
 </h2>
+<div class="container">
+</div>
 
-<canvas id="canvas"height="600"width="600"></canvas>
+<canvas id="canvas" height="600" width="600"></canvas>
 
 </body>
 </html>
