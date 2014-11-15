@@ -34,39 +34,43 @@
         .button {
             font: 500 1em 'Helvetica Neue';
             display: inline-block;
-            padding 0 4em;
+            padding: 0 4em;
             cursor: crosshair;
         }
         span.button:hover {
             background-color: #83c998;
         }
+        div.container {
+            width:10%;
+            position: absolute;
+        }
     </style>
     <script>
         var imageEditor = {};
 
-        imageEditor.edit = function(canvas, edit) {
-            context = canvas.getContext('2d');
+        imageEditor.edit = function(canvas, filter) {
+            var context = canvas.getContext('2d');
             var imgData = context.getImageData(0,0,canvas.width, canvas.height);
-            edit(imgData);
+            filter(imgData);
             context.putImageData(imgData,0,0);
         };
 
         imageEditor.brighten = function(imgData) {
-            console.log('brighten the image');
             for (var i = 0, len = imgData.length; i < len; i += 4) {
                 imgData[i] += 30;
                 imgData[i+1] += 30;
                 imgData[i+2] +=30;
 
             }
+            console.log('brighten the image');
         };
         imageEditor.darken = function(imgData) {
-            console.log('darken the image');
             for(var i = 0, len = imgData.length; i < len; i += 4) {
                 imgData[i] -=50;
                 imgData[i+1] -=85;
                 imgData[i+2] -=15;
             }
+            console.log('darken the image');
         };
 
         window.onload = function() {
