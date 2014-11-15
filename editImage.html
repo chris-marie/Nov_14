@@ -84,36 +84,6 @@
             };
 
         };
-/*
- gllImageFilter.reset = function(canvas, imgurl){
- var img = new Image();
- img.src = imgurl;
- img.onload = function(){
- canvas.height = img.height;
- canvas.width = img.width;
- var ctx = canvas.getContext("2d");
- ctx.drawImage(this, 0, 0, canvas.width, canvas.height);
- };
- };
-
- window.onload = function(){
- var canvas = document.getElementById('canvas');
-
- gllImageFilter.reset(canvas, 'img/thailand.jpg');
-
- document.getElementById('btn_reset').onclick = function(){
- var canvas = document.getElementById('canvas');
- gllImageFilter.reset(canvas, 'img/thailand.jpg');
- document.getElementById('download_image').href = canvas.toDataURL();
- };
-
- document.getElementById('btn_grayscale').onclick = function(){
- var canvas = document.getElementById('canvas');
- gllImageFilter.applyFilter(canvas, gllImageFilter.grayscale);
- document.getElementById('download_image').href = canvas.toDataURL();
- };
-
- */
 
     </script>
 
@@ -127,7 +97,7 @@
     </header>
 </h2>
 
-<canvas id="canvas"></canvas>
+<canvas id="canvas"height="600"width="600"></canvas>
 
 </body>
 </html>
